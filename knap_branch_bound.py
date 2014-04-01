@@ -7,6 +7,7 @@ best = 0
 best_conf = []
 full_capacity = 0
 item_weights = []
+sys.setrecursionlimit(11000)
 
 def solve_it(input_data):
     # Modify this code to run your optimization algorithm
@@ -131,10 +132,10 @@ def current_val(items, taken):
     return value
 
 
-with open('./data/ks_1000_0', 'r') as f:
+with open('./data/ks_10000_0', 'r') as f:
     input_data = ''.join(f.readlines())
-    print cProfile.run('solve_it(input_data)')
-    #print solve_it(input_data)
+    #print cProfile.run('solve_it(input_data)')
+    print solve_it(input_data)
 
 # if __name__ == '__main__':
 #     if len(sys.argv) > 1:

@@ -33,20 +33,12 @@ def solve_it(input_data):
     # it takes items in-order until the knapsack is full
     value = 0
     weight = 0
-    taken = [0]*len(items)
-    skipped = [0]*len(items)
-    global full_capacity
-    full_capacity = capacity
-    prev_oe = optimistic_estimation(items, [0]*len(items), capacity)
-    # for item in items:
-    #     if weight + item.weight <= capacity:
-    #         taken[item.index] = 1
-    #         value += item.value
-    #         weight += item.weight
-    no_items = len(taken)
-    cur_val = 0
+
+
+    #cur_val = 0
     item_weights = map(lambda x: x.weight, items)
-    decide(items, taken, skipped, 0, capacity, cur_val, prev_oe)
+    #decide(items, taken, skipped, 0, capacity, cur_val, prev_oe)
+
     # prepare the solution in the specified output format
     result_presorted = best_conf
     result = [x for (y, x) in sorted(zip(map(lambda x: x.index, items), result_presorted))]
@@ -54,6 +46,20 @@ def solve_it(input_data):
     output_data = str(best) + ' ' + str(0) + '\n'
     output_data += ' '.join(map(str, result))
     return output_data
+
+def bb_iter(items, capacity):
+    taken = []
+    skipped = []
+    lev = 0
+    cap_left = capacity
+    while lev < len(items):
+        if cap_left - items[lev].weight >= 0:
+            taken.append(items[lev])
+            cap_left -= items[lev].weight
+        else:
+            skipped.append(items[lev])
+        lev += 1
+
 
 def decide(items, taken, skipped, i, capacity, cur_val, prev_oe):
     global best
@@ -131,7 +137,7 @@ def current_val(items, taken):
     return value
 
 
-with open('./data/ks_1000_0', 'r') as f:
+with open('./data/ks_4_0', 'r') as f:
     input_data = ''.join(f.readlines())
     print cProfile.run('solve_it(input_data)')
     #print solve_it(input_data)
